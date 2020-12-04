@@ -55,3 +55,56 @@ bool isValidCust(char *str)
     }
     return true;
 }
+
+bool isValidDeleteDish(char *name)
+{
+    if (strcmp(headDish->dish.name, name) == 0)
+    {
+        if (headDish && headDish == tailDish)
+        {
+            headDish = tailDish = NULL;
+            free(headDish);
+        }
+        else
+        {
+            NodeDish *newHead = headDish->next;
+            headDish->next = newHead->prev = NULL;
+            free(headDish);
+            headDish = newHead;
+        }
+        return true;
+    }
+    else if (strcmp(tailDish->dish.name, name) == 0)
+    {
+        if (headDish && headDish == tailDish)
+        {
+            headDish = tailDish = NULL;
+            free(headDish);
+        }
+        else
+        {
+            NodeDish *newTail = tailDish->prev;
+            tailDish->prev = newTail->next = NULL;
+            free(tailDish);
+            tailDish = newTail;
+        }
+        return true;
+    }
+    else
+    {
+        currDish = headDish;
+        while (currDish)
+        {
+            if (strcmp(currDish->dish.name, name) == 0)
+            {
+                currDish->prev->next = currDish->next;
+                currDish->next->prev = currDish->prev;
+                currDish->prev = currDish->next = NULL;
+                free(currDish);
+                return true;
+            }
+            currDish = currDish->next;
+        }
+    }
+    return false;
+}

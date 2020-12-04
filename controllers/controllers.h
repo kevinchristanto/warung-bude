@@ -7,7 +7,7 @@
 void mainMenu();
 void welcome()
 {
-    system("cls || clear");
+    clear_screen();
     printf("System : %s\n", detectOS());
     printf("%s", printCurrentTime());
     puts("1. Add Dish");
@@ -45,30 +45,9 @@ void pushNodeDish(NodeDish *temp)
     }
 }
 
-NodeCustomer *addCust(Customer cust)
+void addDishMenu()
 {
-    NodeCustomer *temp = (NodeCustomer *)malloc(sizeof(NodeCustomer));
-    strcpy(temp->customer.name, cust.name);
-    temp->next = temp->prev = NULL;
-    return temp;
-}
-
-void pushNodeCust(NodeCustomer *temp)
-{
-    if (!headCustomer[0])
-    {
-        headCustomer[0] = tailCustomer[0] = temp;
-    }
-    else
-    {
-        tailCustomer[0]->next = temp;
-        temp->prev = tailCustomer[0];
-        tailCustomer[0] = temp;
-    }
-}
-
-void addDishMenu(NodeDish *c)
-{
+    clear_screen();
     Dish temp;
     do
     {
@@ -99,82 +78,132 @@ void addDishMenu(NodeDish *c)
     mainMenu();
 }
 
-void printMenu(struct NodeDish *temp)
+void printMenu()
 {
-    puts("      Bude's Menu ");
-    puts("");
+    clear_screen();
+    currDish = headDish;
+    puts("Bude's Menu ");
     puts("================================================");
     int i = 1;
     printf("%-4s %-8s %-10s %-10s\n", "No.", "Name", "Quantity", "Price");
-    if (headDish)
+    while (currDish)
     {
-        printf("| %d |", i);
-        // center_print(temp->dish.name, 10);
-        // center_print("RP", 10);
-        // center_print((char *)temp->price, 10);
-        puts("the dish has been added!");
+        printf(" %-4d  %-6s %-10d %-10d\n", i, currDish->dish.name, currDish->dish.qty, currDish->dish.price);
+        currDish = currDish->next;
+        i++;
+    }
+}
+
+void removeDishMenu()
+{
+    clear_screen();
+    char name[255];
+    if (!headDish)
+    {
+        puts("There is no dish in the menu");
         puts("Press enter to continue");
+        getchar();
         getchar();
         mainMenu();
     }
     else
     {
-        puts("There is no dish in the menu");
+        printMenu();
+        do
+        {
+            printf("Insert dish's name to be deleted: ");
+            scanf("%s", name);
+        } while (!isValidDeleteDish(name));
+        puts("The dish has been deleted");
         puts("Press enter to continue");
+        getchar();
         getchar();
         mainMenu();
     }
 }
 
-void removeDishMenu(NodeDish *temp)
+NodeCustomer *addCustomer(Customer cust)
 {
-    NodeDish *baseRoot = NULL;
-    printMenu(baseRoot);
-    char str[255];
-    do
-    {
-        printf("Insert dish's name to be deleted: ");
-        scanf("%s", str);
-    } while (!isValidDish(temp, str));
+    NodeCustomer *temp = (NodeCustomer *)malloc(sizeof(NodeCustomer));
+    strcpy(temp->customer.name, cust.name);
+    temp->next = temp->prev = NULL;
+    return temp;
 }
 
-void addCustomerMenu(NodeCustomer *c)
+void insertCustomer(struct NodeCustomer *temp, int hash)
 {
+    if (!headCustomer[hash])
+    {
+        tailCustomer[hash]->next = temp;
+        tailCustomer[hash] = temp;
+    }
+    else
+    {
+        headCustomer[hash] = tailCustomer[hash] = temp;
+    }
+}
+
+void addCustomerMenu()
+{
+    clear_screen();
     Customer temp;
-    char str[255];
+    char name[255];
     do
     {
         printf("Insert customer's name [Without space]: ");
-        scanf("%s", str);
-    } while (!isValidCust(str));
-    pushNodeCust(addCust(temp));
+        scanf("%s", name);
+    } while (!isValidCust(name));
+    int hash = DJB2(name);
+    insertCustomer(addCustomer(temp), hash);
     sleep();
     puts("Customer has been added!");
+    puts("Press enter to continue");
+    getchar();
     getchar();
     mainMenu();
 }
 
+void searchCustomerMenu()
+{
+    char name[255];
+    printf("Insert the customer's name to be searched: ");
+    scanf("%s", name);
+}
+
+void exitMenu()
+{
+    FILE *fp = fopen("/Users/kevinchristanto/Desktop/warung-bude/views/splash-screen.txt", "r");
+    char str[10000];
+    while (!feof(fp))
+    {
+        fscanf(fp, "%[^\n]\n", str);
+        printf("%s\n", str);
+    }
+    fclose(fp);
+    puts("Please expand your terminal to full screen");
+    puts("Press enter to continue");
+    getchar();
+    getchar();
+}
+
 void mainMenu() //Prompt print main menu
 {
-    NodeDish *baseDish = NULL;
-    NodeOrder *baseOrder = NULL;
-    NodeCustomer *baseCustomer = NULL;
     welcome();
     int input;
     do
     {
-        printf(">>");
+        printf(">> ");
         scanf("%d", &input);
         switch (input)
         {
         case 1:
-            addDishMenu(baseDish);
+            addDishMenu();
             break;
         case 2:
-            //removeDishMenu();
+            removeDishMenu();
             break;
         case 3:
-            addCustomerMenu(baseCustomer);
+            addCustomerMenu();
             break;
         case 4:
             //searchCustomerMenu();
@@ -189,7 +218,7 @@ void mainMenu() //Prompt print main menu
             //paymentMenu();
             break;
         case 8:
-            //exitMenu();
+            exitMenu();
             break;
         }
     } while (!(input > 1 && input < 9));

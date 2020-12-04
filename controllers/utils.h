@@ -37,7 +37,7 @@ void sleep()
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
-void clearscreen()
+void clear_screen()
 {
     system("cls||clear");
 }
@@ -48,21 +48,5 @@ unsigned long DJB2(char *str)
     int c;
     while ((c = *str++))
         hash = ((hash << 5) + hash) + c;
-    return hash % MAX_ELEMENT;
-}
-
-void center_print(const char *s, int width)
-{
-    int length = strlen(s);
-    int i;
-    for (i = 0; i <= (width - length) / 2; i++)
-    {
-        fputs(" ", stdout);
-    }
-    fputs(s, stdout);
-    i += length;
-    for (; i <= width; i++)
-    {
-        fputs(" ", stdout);
-    }
+    return hash % 26;
 }
