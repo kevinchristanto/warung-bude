@@ -228,14 +228,17 @@ void mainMenu() //Prompt print main menu
             break;
         case 5:
             puts("Coming soon");
+            sleep();
             //viewWartegMenu();
             break;
         case 6:
             puts("Coming soon");
+            sleep();
             //orderManu();
             break;
         case 7:
             puts("Coming soon");
+            sleep();
             //paymentMenu();
             break;
         case 8:
