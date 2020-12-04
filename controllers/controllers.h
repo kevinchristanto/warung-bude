@@ -192,7 +192,7 @@ void exitMenu()
 {
     puts("Please expand your terminal to full screen");
     puts("Press enter to continue");
-    FILE *fp = fopen("/Users/kevinchristanto/Desktop/warung-bude/views/splash-screen.txt", "r");
+    FILE *fp = fopen("../views/splash-screen.txt", "r");
     char str[10000];
     while (!feof(fp))
     {
@@ -224,7 +224,6 @@ void mainMenu() //Prompt print main menu
             addCustomerMenu();
             break;
         case 4:
-            puts("Coming soon");
             searchCustomerMenu();
             break;
         case 5:
@@ -241,6 +240,7 @@ void mainMenu() //Prompt print main menu
             break;
         case 8:
             exitMenu();
+            return;
             break;
         }
     } while (!(input > 1 && input < 9));
