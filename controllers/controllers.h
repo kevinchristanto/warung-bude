@@ -275,8 +275,6 @@ void mainMenu() //Prompt print main menu
             searchCustomerMenu();
             break;
         case 5:
-            //puts("Coming soon");
-            //sleep();
             viewWartegMenu();
             break;
         case 6:
