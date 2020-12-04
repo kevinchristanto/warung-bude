@@ -207,15 +207,19 @@ void mainMenu() //Prompt print main menu
             addCustomerMenu();
             break;
         case 4:
+            puts("Coming soon");
             searchCustomerMenu();
             break;
         case 5:
+            puts("Coming soon");
             //viewWartegMenu();
             break;
         case 6:
+            puts("Coming soon");
             //orderManu();
             break;
         case 7:
+            puts("Coming soon");
             //paymentMenu();
             break;
         case 8:
