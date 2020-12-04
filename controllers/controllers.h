@@ -188,6 +188,54 @@ void searchCustomerMenu()
     mainMenu();
 }
 
+void viewWartegMenu()
+{
+    puts("Customer list: ");
+    bool present = false;
+    int flag;
+    for (int i = 0; i < 26; i++)
+    {
+        flag = 0;
+        currCustomer = headCustomer[i];
+        while (currCustomer)
+        {
+            if (present == false)
+            {
+                present = true; // ini jalan kalau currCustomer ada
+            }
+            if (flag == 0)
+            {
+                printf("%d.", i);
+                printf("%s", currCustomer->customer.name);
+                flag = 1;
+            }
+            else //chaining jika ada
+            {
+                printf(" -- ");
+                printf("%s", currCustomer->customer.name);
+            }
+            currCustomer = currCustomer->next;
+            puts("");
+            puts("Press enter to continue");
+            getchar();
+            getchar();
+            mainMenu();
+        }
+        if (flag == 1)
+        {
+            printf("\n");
+        }
+    }
+    if (present == false) // ini jalan kalau currCustomer ga ada
+    {
+        puts("There is no customer");
+        puts("Press enter to continue");
+        getchar();
+        getchar();
+        mainMenu();
+    }
+}
+
 void exitMenu()
 {
     puts("Please expand your terminal to full screen");
@@ -227,9 +275,9 @@ void mainMenu() //Prompt print main menu
             searchCustomerMenu();
             break;
         case 5:
-            puts("Coming soon");
-            sleep();
-            //viewWartegMenu();
+            //puts("Coming soon");
+            //sleep();
+            viewWartegMenu();
             break;
         case 6:
             puts("Coming soon");
