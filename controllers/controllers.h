@@ -88,7 +88,7 @@ void printMenu()
     printf("%-4s %-8s %-10s %-10s\n", "No.", "Name", "Quantity", "Price");
     while (currDish)
     {
-        printf(" %d.  %-10s %-8d Rp%-10d\n", i, currDish->dish.name, currDish->dish.qty, currDish->dish.price);
+        printf(" %d.  %-10s %03d  Rp%-12d\n", i, currDish->dish.name, currDish->dish.qty, currDish->dish.price);
         currDish = currDish->next;
         i++;
     }
@@ -165,6 +165,7 @@ void addCustomerMenu()
 
 void searchCustomerMenu()
 {
+    clear_screen();
     char name[255];
     printf("Insert the customer's name to be searched: ");
     scanf("%s", name);
