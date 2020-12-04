@@ -108,3 +108,23 @@ bool isValidDeleteDish(char *name)
     }
     return false;
 }
+
+bool isPresent(char *name)
+{
+    for (int i = 0; i < 26; i++)
+    {
+        if (headCustomer[i])
+        {
+            currCustomer = headCustomer[i];
+            while (currCustomer)
+            {
+                if (strcmp(currCustomer->customer.name, name) == 0)
+                {
+                    return true;
+                }
+                currCustomer = currCustomer->next;
+            }
+        }
+    }
+    return false;
+}

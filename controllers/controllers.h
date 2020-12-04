@@ -100,6 +100,7 @@ void removeDishMenu()
     char name[255];
     if (!headDish)
     {
+        sleep();
         puts("There is no dish in the menu");
         puts("Press enter to continue");
         getchar();
@@ -114,6 +115,7 @@ void removeDishMenu()
             printf("Insert dish's name to be deleted: ");
             scanf("%s", name);
         } while (!isValidDeleteDish(name));
+        sleep();
         puts("The dish has been deleted");
         puts("Press enter to continue");
         getchar();
@@ -168,7 +170,22 @@ void searchCustomerMenu()
     clear_screen();
     char name[255];
     printf("Insert the customer's name to be searched: ");
-    scanf("%s", name);
+    getchar();
+    scanf("%[^\n]", name);
+    bool present = isPresent(name);
+    sleep();
+    if (present == true)
+    {
+        printf("%s is present.\n", name);
+    }
+    else
+    {
+        printf("%s is not present.\n", name);
+    }
+    puts("Press enter to continue ");
+    getchar();
+    getchar();
+    mainMenu();
 }
 
 void exitMenu()
