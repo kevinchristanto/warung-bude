@@ -88,7 +88,7 @@ void printMenu()
     printf("%-4s %-8s %-10s %-10s\n", "No.", "Name", "Quantity", "Price");
     while (currDish)
     {
-        printf(" %-4d  %-6s %-10d %-10d\n", i, currDish->dish.name, currDish->dish.qty, currDish->dish.price);
+        printf(" %d.  %-10s %-8d Rp%-10d\n", i, currDish->dish.name, currDish->dish.qty, currDish->dish.price);
         currDish = currDish->next;
         i++;
     }
@@ -122,10 +122,10 @@ void removeDishMenu()
     }
 }
 
-NodeCustomer *addCustomer(Customer cust)
+NodeCustomer *addCustomer(char *name)
 {
     NodeCustomer *temp = (NodeCustomer *)malloc(sizeof(NodeCustomer));
-    strcpy(temp->customer.name, cust.name);
+    strcpy(temp->customer.name, name);
     temp->next = temp->prev = NULL;
     return temp;
 }
@@ -146,7 +146,6 @@ void insertCustomer(struct NodeCustomer *temp, int hash)
 void addCustomerMenu()
 {
     clear_screen();
-    Customer temp;
     char name[255];
     do
     {
@@ -154,7 +153,7 @@ void addCustomerMenu()
         scanf("%s", name);
     } while (!isValidCust(name));
     int hash = DJB2(name);
-    insertCustomer(addCustomer(temp), hash);
+    insertCustomer(addCustomer(name), hash);
     sleep();
     puts("Customer has been added!");
     puts("Press enter to continue");
@@ -172,16 +171,16 @@ void searchCustomerMenu()
 
 void exitMenu()
 {
+    puts("Please expand your terminal to full screen");
+    puts("Press enter to continue");
     FILE *fp = fopen("/Users/kevinchristanto/Desktop/warung-bude/views/splash-screen.txt", "r");
     char str[10000];
     while (!feof(fp))
     {
-        fscanf(fp, "%[^\n]\n", str);
+        fscanf(fp, "%[^\n]%*c", str);
         printf("%s\n", str);
     }
     fclose(fp);
-    puts("Please expand your terminal to full screen");
-    puts("Press enter to continue");
     getchar();
     getchar();
 }
