@@ -132,7 +132,7 @@ NodeCustomer *addCustomer(char *name)
 
 void insertCustomer(struct NodeCustomer *temp, int hash)
 {
-    if (!headCustomer[hash])
+    if (headCustomer[hash])
     {
         tailCustomer[hash]->next = temp;
         tailCustomer[hash] = temp;
@@ -150,7 +150,8 @@ void addCustomerMenu()
     do
     {
         printf("Insert customer's name [Without space]: ");
-        scanf("%s", name);
+        getchar();
+        scanf("%[^\n]", name);
     } while (!isValidCust(name));
     int hash = DJB2(name);
     insertCustomer(addCustomer(name), hash);
@@ -205,7 +206,7 @@ void mainMenu() //Prompt print main menu
             addCustomerMenu();
             break;
         case 4:
-            //searchCustomerMenu();
+            searchCustomerMenu();
             break;
         case 5:
             //viewWartegMenu();
